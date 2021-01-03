@@ -7,7 +7,7 @@
 		<script type="text/javascript" src="sudoku.js"></script>
 		<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
 		<script language="javascript" type="text/javascript">
-
+			let sa = ["","क्","ख्","ग","घ्","ङ्","च्","छ्","ज्","झ्"]
 			var puzzle;
 			var selectedTile;
 			var r, c;
@@ -21,16 +21,16 @@
 				    $("#numPad").fadeIn(100);
 				    $("#numPad").offset({left: e.pageX - 78,top: e.pageY - 40});
 				});
-				$("#np1").click(function() { numberPad(1); });
 				$("#np2").click(function() { numberPad(2); });
 				$("#np3").click(function() { numberPad(3); });
+				$("#np1").click(function() { numberPad(1); });
 				$("#np4").click(function() { numberPad(4); });
 				$("#np5").click(function() { numberPad(5); });
 				$("#np6").click(function() { numberPad(6); });
 				$("#np7").click(function() { numberPad(7); });
 				$("#np8").click(function() { numberPad(8); });
 				$("#np9").click(function() { numberPad(9); });
-				$("#npx").click(function() { numberPad(""); });
+				$("#npx").click(function() { numberPad(0); });
 				$(".mistakeScreen").click(function() {
 					$(".mistakeScreen").fadeOut(100);
 				});
@@ -56,7 +56,7 @@
 						else {
 							tile.style.backgroundColor = "#ecf4f3";
 							tile.className = "cell";
-							tile.innerHTML = puzzle.getTileNumber(i, j);
+							tile.innerHTML = sa[puzzle.getTileNumber(i, j)];
 						}
 					}
 				}
@@ -74,7 +74,7 @@
 			}
 
 			function numberPad(value) {
-				selectedTile.innerHTML = value;
+				selectedTile.innerHTML = sa[value];
 				deselect();
 				$("#numPad").fadeOut(100);
 				if(checkForEmptyCells() === true) {
@@ -83,7 +83,10 @@
 						for(var j = 0; j < 9; j++) {
 							var t = document.getElementById("t" + i + "x" + j);
 							if(t.classList.contains("emptyCell")) {
-								if(puzzle.isValid(fGrid, i, j, t.innerHTML)) {
+								console.log("outside target")
+								console.log(fGrid);
+								if(puzzle.isValid(fGrid, i, j, sa.indexOf(t.innerHTML))) {
+									console.log("inside target")
 									continue;
 								}
 								else {
@@ -103,7 +106,7 @@
 				for(var i = 0; i < 9; i++) {
 					fGrid[i] = new Array(9);
 					for(var j = 0; j < 9; j++) {
-						fGrid[i][j] = document.getElementById("t" + i + "x" + j).innerHTML;
+						fGrid[i][j] = sa.indexOf(document.getElementById("t" + i + "x" + j).innerHTML);
 					}
 				}
 				return fGrid;
@@ -132,7 +135,7 @@
 				for(var i = 0; i < 9; i++) {
 					for(var j = 0; j < 9; j++) {
 						var tile = document.getElementById("t" + i + "x" + j);
-						tile.innerHTML = puzzle.getSolution(i, j);
+						tile.innerHTML = sa[puzzle.getSolution(i, j)];
 					}
 				}
 			}
@@ -147,23 +150,25 @@
 			<center class="winText">You're a winner. That's pretty neat.</center>
 		</div>
 		<section id="logosection">
-			<img class="logo" src="img/sudokuberlogo.png" />
+			<!-- <img class="logo" src="img/sudokuberlogo.png" /> -->
+			<p style="font-size: 60px; margin: -10px -10px; padding: 0px;">सुडोकू</p>
 		</section>
 		<section id="sudokuPuzzle">
 			<div id='numPad'>
 				<center>
 					<div>
-						<span id="np1" class='padNumbers' value='1'>1</span>
-						<span id="np2" class='padNumbers' value='2'>2</span>
-						<span id="np3" class='padNumbers' value='3'>3</span>
-						<span id="np4" class='padNumbers' value='4'>4</span>
-						<span id="np5" class='padNumbers' value='5'>5</span>
+						<!-- ["क्","ख्","ग","घ्","ङ्","च्","छ्","ज्","झ्","ञ्"] -->
+						<span id="np1" class='padNumbers' value='1'>क्</span>
+						<span id="np2" class='padNumbers' value='2'>ख्</span>
+						<span id="np3" class='padNumbers' value='3'>ग</span>
+						<span id="np4" class='padNumbers' value='4'>घ्</span>
+						<span id="np5" class='padNumbers' value='5'>ङ्</span>
 					</div>
 					<div>
-						<span id="np6" class='padNumbers' value='6'>6</span>
-						<span id="np7" class='padNumbers' value='7'>7</span>
-						<span id="np8" class='padNumbers' value='8'>8</span>
-						<span id="np9" class='padNumbers' value='9'>9</span>
+						<span id="np6" class='padNumbers' value='6'>च्</span>
+						<span id="np7" class='padNumbers' value='7'>छ्</span>
+						<span id="np8" class='padNumbers' value='8'>ज्</span>
+						<span id="np9" class='padNumbers' value='9'>झ्</span>
 						<span id="npx" class='padNumbers' value='x'>x</span>
 					</div>
 				</center>
@@ -229,6 +234,6 @@
 	</body>
 
 	<footer>
-		Web page design by Art Tucay Jr., for Uber Inc. All libraries and fonts within this page are used under personal means and are not meant for commerial use.
+		Sudoku Source: https://github.com/artbtjr/Sudoku
 	</footer>
 </html>
