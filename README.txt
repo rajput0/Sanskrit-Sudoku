@@ -1,8 +1,13 @@
+The original source of this repository is https://github.com/artbtjr/Sudoku
+
+I have modified some of the code and using it for educational purposes only!
+
+----------------------- README ---------------------------
+
 SudokUber: Front End Engineer Coding Challenge for Uber Inc.
 
 Created by Art Tucay Jr.
 
-This puzzle is also hosted at: http://artjr.net/sudoku.html
 GitHub repository: https://github.com/artbtjr/Sudoku
 
 
