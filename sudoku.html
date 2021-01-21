@@ -5,13 +5,13 @@
 		<title>सुडोकू!</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="sudoku.js"></script>
-		<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
-		<script language="javascript" type="text/javascript">
-			let sa = ["","क","ख","ग","घ","ङ","च","छ","ज","झ"]
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script><script language="javascript" type="text/javascript">
+			let sa = ["","क","ख","ग","घ","ङ","च","छ","ज","झ"];
+			let nums=["","१","२","३","४","५","६","७","८","९"];
 			var puzzle;
 			var selectedTile;
 			var r, c;
-
+var numtmod="num";
 			$(document).ready(function() {
 				init();
 				$("#grid").fadeIn(500);
@@ -35,6 +35,7 @@
 					$(".mistakeScreen").fadeOut(100);
 				});
 				$("#newGame").click(function() { newGame(); });
+				$("#tognum").click(function(){ numtog();});
 				$("#solve").click(function() {
 					$("#numPad").fadeOut(100);
 				    solve();
@@ -42,6 +43,72 @@
 				
 			});
 
+			function numtog()
+			{
+			//debugger;
+			
+			
+			//if ($("td")[numtc].innerText == "क")
+			//$("td")[numtc].innerText = "1";
+			
+				if (numtmod=="num")
+				{
+				for (numtc=0;numtc<81;numtc++)
+				switch ($("td")[numtc].innerText) 
+						{
+						case "क" : $("td")[numtc].innerText = "१";
+							break;
+						case "ख" : $("td")[numtc].innerText = "२";
+							break;
+						case "ग" : $("td")[numtc].innerText = "३";
+							break;
+						case "घ" : $("td")[numtc].innerText = "४";
+							break;
+						case "ङ" : $("td")[numtc].innerText = "५";
+							break;
+						case "च" : $("td")[numtc].innerText = "६";
+							break;							
+						case "छ" : $("td")[numtc].innerText = "७";
+							break;
+						case "ज" : $("td")[numtc].innerText = "८";
+							break;
+						case "झ" : $("td")[numtc].innerText = "९";
+							break;							
+			} ;
+			numtmod="letter";
+			for (numtc=1;numtc<=9;numtc++)
+			   document.getElementById("np"+numtc).innerText=nums[numtc];
+			}
+			else{
+			for (numtc=0;numtc<81;numtc++)
+			switch ($("td")[numtc].innerText) 
+						{
+						case "१" : $("td")[numtc].innerText = "क";
+							break;
+						case "२" : $("td")[numtc].innerText = "ख";
+							break;
+						case "३" : $("td")[numtc].innerText = "ग";
+							break;
+						case "४" : $("td")[numtc].innerText = "घ";
+							break;							
+						case "५" : $("td")[numtc].innerText = "ङ";
+							break;
+						case "६" : $("td")[numtc].innerText = "च";
+							break;
+						case "७" : $("td")[numtc].innerText = "छ";
+							break;
+						case "८" : $("td")[numtc].innerText = "ज";
+							break;
+						case "९" : $("td")[numtc].innerText = "झ";
+							break;						
+			}
+			numtmod="num";
+			for (numtc=1;numtc<=9;numtc++)
+			   document.getElementById("np"+numtc).innerText=sa[numtc];
+			}
+			
+			
+			}
 			
 			function init() {
 				puzzle = new generateSudoku();
@@ -74,7 +141,10 @@
 			}
 
 			function numberPad(value) {
-				selectedTile.innerHTML = sa[value];
+				if (numtmod=="num") 
+				   selectedTile.innerHTML = sa[value]
+				else
+				   selectedTile.innerHTML = nums[value];
 				deselect();
 				$("#numPad").fadeOut(100);
 				if(checkForEmptyCells() === true) {
@@ -86,7 +156,7 @@
 								console.log("outside target")
 								console.log(fGrid);
 								if(puzzle.isValid(fGrid, i, j, sa.indexOf(t.innerHTML))) {
-									console.log("inside target")
+									//console.log("inside target")
 									continue;
 								}
 								else {
@@ -165,7 +235,7 @@
 						<span id="np5" class='padNumbers' value='5'>ङ</span>
 					</div>
 					<div>
-						<span id="np6" class='padNumbers' value='6'>च्</span>
+						<span id="np6" class='padNumbers' value='6'>च</span>
 						<span id="np7" class='padNumbers' value='7'>छ</span>
 						<span id="np8" class='padNumbers' value='8'>ज</span>
 						<span id="np9" class='padNumbers' value='9'>झ</span>
@@ -175,8 +245,9 @@
 			</div>
 			<center>
 				<form id="formwrapper">
-					<span id="newGame" class="formbutton">नूतनं	सुडोकू</span>
+					<span id="newGame" class="formbutton">नूतनं सुडोकू (sudoku)</span>
 					<span id="solve" class="formbutton">उत्तरम्</span>
+					<span id="tognum" class="formbutton">व्यञ्जनम्/संख्या अनुवर्तनम् (Toggle letters/numbers)</span>
 				</form>
 			</center>
 			<table class="inner container" align="center" id="grid">
